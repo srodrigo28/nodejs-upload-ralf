@@ -1,2 +1,30 @@
-<h1 class="text-center">Formulario - Express Handlebars</h1>
-<button class="btn btn-outline-primary">Cadastrar</button>
+<main>
+    <h1 class="text-center">Formulario - Express Handlebars</h1>
+    <form action="/cadastrar" method="post" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="nome">Nome</label>
+                <input type="text" name="produto" id="nome" class="form-control">
+            </div>
+            <div class="col">
+                <label for="nome">Valor</label>
+                <input type="text" name="valor" id="valor" class="form-control">
+            </div>
+            <div class="col">
+                <label for="nome">Quantidade</label>
+                <input type="text" name="qtd" id="qtd" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="file" name="imagem" class="form-control">
+                {{!-- <input type="file" name="imagem" /> --}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary w-25">Cadastrar</button>
+        
+        <a href="/pedido">
+            <span class="btn btn-outline-success w-25">Pedidos</span>
+        </a>
+    </form>
+</main>
