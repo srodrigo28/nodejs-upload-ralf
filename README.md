@@ -14,6 +14,11 @@
     * nodemon
         npm i nodemon
 
+#### não rodou 
+"express-handlebars": "^7.1.2",
+"express-handlebars": "^6.0.0",
+
+
 #### Referências
 * Ralf playlist
 ``` 

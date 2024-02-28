@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require('express')
 const mysql = require('mysql2');
 const { engine } = require('express-handlebars')
 
 const port = 8080;
 const app = express();
 
-app.engine('handlebars', engine);
+app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', 'views');
 
