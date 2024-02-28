@@ -5,6 +5,8 @@ const { engine } = require('express-handlebars')
 const port = 8080;
 const app = express();
 
+app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
+
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', 'views');
@@ -26,7 +28,7 @@ conexao.connect(function (error){
 })
 
 app.get('/', function (req, res){
-    res.render('formulario')
+    res.render('produto')
 });
 
 app.listen(port, function(){

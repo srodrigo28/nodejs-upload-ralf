@@ -8,16 +8,14 @@
     * express,
         npm i express
     * bootstrap,
-
+        npm i bootstrap
     * express-handlebars
         npm i express-handlebars
     * nodemon
         npm i nodemon
 
-#### não rodou 
-"express-handlebars": "^7.1.2",
-"express-handlebars": "^6.0.0",
-
+#### And point
+* http://localhost:8080/
 
 #### Referências
 * Ralf playlist
