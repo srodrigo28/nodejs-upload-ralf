@@ -24,16 +24,19 @@
 #### express-handlebars
 
 * 1. config "express-handlebars": "^7.1.2"
-/** Config frontend */
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', 'views');
+    /** Config frontend */
+    app.engine('handlebars', engine());
+    app.set('view engine', 'handlebars');
+    app.set('views', 'views');
 
-/** Config frontend Bootstrap e CSS*/
-app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
-app.use('/css', express.static('./views/css'));
+    /** Config frontend Bootstrap e CSS*/
+    app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
+    app.use('/css', express.static('./views/css'));
 
 * 2. use passando uma rota
+    app.get('/pedido', function (req, res){
+        res.render('pedido')
+    });
 
 
 #### Deu canceira
@@ -43,5 +46,5 @@ app.use('/css', express.static('./views/css'));
 #### Referências
 * Ralf playlist
 ``` 
-https://www.youtube.com/watch?v=Bx29x6UMzy4&list=PLWXw8Gu52TRI5NJmexwA9qco33goFxbHK&index=9
+https://www.youtube.com/watch?v=nG027HRjlgM&list=PLWXw8Gu52TRI5NJmexwA9qco33goFxbHK&index=17
 ```

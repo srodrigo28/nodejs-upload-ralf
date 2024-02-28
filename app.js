@@ -21,6 +21,7 @@ app.set('views', 'views');
 /** Config frontend Bootstrap e CSS*/
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
 app.use('/css', express.static('./views/css'));
+app.use('/image', express.static('./image'));
 
 /** Mysql config */
 const conexao = mysql.createConnection({
@@ -41,21 +42,56 @@ conexao.connect(function (error){
 })
 
 app.get('/', function (req, res){
-    res.render('produto')
+    
+    // SQL
+    let sql = `SELECT * FROM produtos`;
+    conexao.query(sql, function(error, retorno){
+        res.render('produto', {produtos:retorno})
+    });
+    // res.render('produto')
 });
 
-/** Rota cadastrar produtos */
+/** Rota cadastrar produtos indices: produto, valor, qtd, imagem */
 app.post('/cadastrar', function(req, res){
-    // res.setHeader('Content-Type', 'text/plain')
-    console.log(req.files['imagem']);
-    // console.log(req.body['valor']);
-    // console.log(req.files['imagem'].name);
-    req.files.imagem.mv(__dirname+'/image/'+req.files['imagem'].name);
-    /** Revisar tempo 6:38min
-     * link https://www.youtube.com/watch?v=MlLlYbFN7iM&list=PLWXw8Gu52TRI5NJmexwA9qco33goFxbHK&index=14
-    console.log(req.files.imagem.name);
-     */
-    res.end();
+    // Obter os dados
+    let produto = req.body['produto'];
+    let valor = req.body['valor'];
+    let qtd = req.body['qtd'];
+    let imagem = req.files['imagem'].name;
+
+    // Comando SQL
+    let sql = `INSERT INTO produtos (nome, valor, qtd, imagem) 
+        VALUES('${produto}', '${valor}', '${qtd}', '${imagem}' )`;
+    
+        /**  Executar o comando SQL 1 */
+        conexao.query(sql, function(error){
+            if(error){
+                console.log("se lascou :(" + error.message);
+            }else{
+                console.log("Inserido com sucesso :)");
+                req.files['imagem'].mv(__dirname+'/image/'+req.files['imagem'].name)
+                return false;
+            }
+        });
+
+        /** Executar o comando SQL 2
+        conexao.query(sql, function(error, retorno){
+            if(error) throw error;
+            req.files['imagem'].mv(__dirname+'/image/'+req.files['imagem'].name)
+            console.log(retorno)
+        });
+        */
+
+        res.redirect('/')
+        /*** Testes realizados
+        res.setHeader('Content-Type', 'text/plain')
+        console.log(req.body);
+        console.log(req.body['valor']);
+        console.log(req.files['imagem']);
+        console.log(req.files['imagem'].name);
+        req.files.imagem.mv(__dirname+'/image/'+req.files['imagem'].name);
+    */
+    
 });
 
 app.get('/pedido', function (req, res){

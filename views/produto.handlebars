@@ -3,21 +3,22 @@
     <form action="/cadastrar" method="post" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col">
-                <label for="nome">Nome</label>
-                <input type="text" name="produto" id="nome" class="form-control">
+                <label for="produto">Nome</label>
+                <input type="text" name="produto" id="produto" class="form-control">
             </div>
             <div class="col">
-                <label for="nome">Valor</label>
+                <label for="valor">Valor</label>
                 <input type="text" name="valor" id="valor" class="form-control">
             </div>
             <div class="col">
-                <label for="nome">Quantidade</label>
+                <label for="qtd">Quantidade</label>
                 <input type="text" name="qtd" id="qtd" class="form-control">
             </div>
         </div>
         <div class="row mb-3">
             <div class="col">
-                <input type="file" name="imagem" class="form-control">
+                <label for="imagem">Imagem do produto</label>
+                <input type="file" name="imagem" id="imagem" class="form-control">
                 {{!-- <input type="file" name="imagem" /> --}}
             </div>
         </div>
@@ -27,4 +28,24 @@
             <span class="btn btn-outline-success w-25">Pedidos</span>
         </a>
     </form>
+
+    <div class="row mt-5">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center bg-primary text-white h3">Produtos</div>
+                <div class="card-body">
+                    <div class="row w-25">
+                        <img width="100" src="../image/ErroNextAuth.png" alt="produto-imagem">
+                        <p>Perfil</p>
+                        <p>R$ 20,00</p>
+                        <p>20</p>
+                        <div class="row d-flex gap-2">
+                            <a href="#" class="btn btn-outline-warning">Alterar</a>
+                            <a href="#" class="btn btn-outline-danger">Remover</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
