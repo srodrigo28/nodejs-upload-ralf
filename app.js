@@ -1,5 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2');
+const fs = require('fs');
 const { engine } = require('express-handlebars')
 const fileupload = require('express-fileupload');
 
@@ -46,7 +47,9 @@ app.get('/', function (req, res){
     // SQL
     let sql = `SELECT * FROM produtos`;
     conexao.query(sql, function(error, retorno){
+        if(error) console.log(error.message);
         res.render('produto', {produtos:retorno})
+        // console.log(retorno)
     });
     // res.render('produto')
 });
@@ -93,6 +96,27 @@ app.post('/cadastrar', function(req, res){
     */
     
 });
+
+app.get('/remover/:codigo&:imagem', function(req, res){
+    /*** 1. testa se recebe os dados
+    console.log(req.params.codigo);
+    console.log(req.params.imagem);
+    res.end(); */
+    // 2. passo 
+    let sql = `DELETE FROM produtos WHERE codigo = ${req.params.codigo}`;
+
+    // 3. passo 
+    conexao.query(sql, function(error, retorno){
+        if(error) throw error; // caso falhe
+        console.log(retorno)
+        fs.unlink(__dirname+'/image/'+req.params.imagem, (error) =>{
+            if(error) throw error; // caso falhe
+            console.log(retorno)
+        });
+    });
+
+    res.redirect('/');
+})
 
 app.get('/pedido', function (req, res){
     res.render('pedido')
