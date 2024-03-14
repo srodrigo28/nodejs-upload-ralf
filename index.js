@@ -4,7 +4,7 @@ const fs = require('fs');
 const { engine } = require('express-handlebars')
 const fileupload = require('express-fileupload');
 
-const port = 8080;
+const port = 3333;
 const app = express();
 
 /** Habilitando upload de arquivos */
@@ -26,12 +26,12 @@ app.use('/image', express.static('./image'));
 
 /** Mysql config */
 const conexao = mysql.createConnection({
-    host: 'localhost',
+    host: 'roundhouse.proxy.rlwy.net',
     user: 'root',
-    port: 3306,
-    password: '',
-    database: 'projeto'
-})
+    port: 48951,
+    password: 'FvfBIYNtTCfsuvBrHIxwWEZaCXeerKIQ',
+    database: 'railway'
+});
 
 /** Mysql conect */
 conexao.connect(function (error){
@@ -40,7 +40,7 @@ conexao.connect(function (error){
     }else{
         console.log('Conectado com sucesso!');
     }
-})
+});
 
 app.get('/', function (req, res){
     
@@ -63,7 +63,7 @@ app.post('/cadastrar', function(req, res){
     let imagem = req.files['imagem'].name;
 
     // Comando SQL
-    let sql = `INSERT INTO produtos (nome, valor, qtd, imagem) 
+    let sql = `INSERT INTO produtos (produto, valor, qtd, imagem) 
         VALUES('${produto}', '${valor}', '${qtd}', '${imagem}' )`;
     
         /**  Executar o comando SQL 1 */
@@ -116,7 +116,79 @@ app.get('/remover/:codigo&:imagem', function(req, res){
     });
 
     res.redirect('/');
-})
+});
+
+app.get('/editar/:codigo', function(req, res){
+    // console.log(req.params.codigo);
+    // res.end();
+
+    //SQL 
+    let sql = `SELECT * FROM produtos WHERE codigo = ${req.params.codigo}`;
+
+    // Executar o comando SQL
+    conexao.query(sql, function(error, retorno){
+        // Casso Erro
+        if(error) console.log(error.message);
+
+        // Casso sucesso
+        res.render('produto-editar', {produto:retorno[0]});
+        // console.log(retorno)
+    });
+
+    // res.render('produto-editar')
+});
+
+app.post('/editar', function(req, res){
+    // Obter os dados
+    let qtd = req.body['qtd'];
+    let valor = req.body['valor'];
+    let codigo = req.body['codigo'];
+    let produto = req.body['produto'];
+    let nomeImage = req.body['nomeImage'];
+
+    console.log(
+        'Código ' + codigo + 
+        '\n produto: ' + produto + 
+        '\n valor: ' + valor + 
+        '\n qtd: ' + qtd + 
+        '\n nomeImage: ' + nomeImage
+    )
+    
+    try{
+        let imagem = req.files['imagem'].name;
+        console.log('A imagem sera alterada ' + imagem);
+        return false;
+    }catch(error){
+        console.log('A imagem nao sera alterada ' + error.message)
+        return false;
+    }
+    // res.end();
+
+    try{
+    let imagem = req.files['imagem'];
+
+    // SQL
+    let sql = `UPDATE produtos
+                SET produto = '${produto}', valor = '${valor}', qtd = '${qtd}', imagem='${imagem.name}' 
+                WHERE codigo = ${req.params.codigo}
+            `;
+    conexao.query(sql, function(error, retorno) {
+        if(error) throw error; // caso falhe
+        
+        fs.unlink(__dirname+'./image/'+nomeImage, (error_imagem)=> {
+            console.log('Falha na remoção da imagem. ')
+        });
+        
+        imagem.mv(__dirname+'./image/'+imagem.name)
+    });
+    }catch(error){
+        console.log(error.message)
+        return false;
+    }
+
+    // Redireciona
+    res.redirect('/');
+});
 
 app.get('/pedido', function (req, res){
     res.render('pedido')

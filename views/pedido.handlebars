@@ -1,6 +1,30 @@
+
 <main>
     <h1 class="text-center">Formulario - Pedidos</h1>
     <a href="/">
-            <span class="btn btn-outline-primary">Cadastro</span>
-        </a>
+        <span class="btn btn-outline-primary">Cadastro</span>
+    </a>
+    {{!-- Listagem --}}
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center bg-primary text-white h3">Produtos</div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        {{#each produtos}}
+                            <div class="col-12 col-sm-2 border border-success">
+                                <img width="200" height="175" src="../image/{{imagem}}" alt="produto-imagem">
+                                <div class="textos">
+                                    <span>{{nome}}</span>
+                                    <span>Valor: R$ {{valor}}</span>
+                                </div>
+                                <a href="/editar/{{codigo}}" class="btn btn-outline-warning w-100 mt-1 mb-1">Alterar</a>
+                                <a href="/remover/{{codigo}}&{{imagem}}" class="btn btn-outline-danger w-100 mb-2">Remover</a>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>

@@ -1,5 +1,10 @@
 <main>
-    <h1 class="text-center">Formulario - Express Handlebars</h1>
+    <script>
+        function 
+    </script>
+    <h1 class="text-center">Cadastrar Produtos</h1>
+
+    {{!-- Formulário --}}
     <form action="/cadastrar" method="post" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col">
@@ -29,6 +34,7 @@
         </a>
     </form>
 
+    {{!-- Listagem --}}
     <div class="row mt-4">
         <div class="col">
             <div class="card">
@@ -42,7 +48,7 @@
                                     <span>{{nome}}</span>
                                     <span>Valor: R$ {{valor}}</span>
                                 </div>
-                                <a href="#" class="btn btn-outline-warning w-100 mt-1 mb-1">Alterar</a>
+                                <a href="/editar/{{codigo}}" class="btn btn-outline-warning w-100 mt-1 mb-1">Alterar</a>
                                 <a href="/remover/{{codigo}}&{{imagem}}" class="btn btn-outline-danger w-100 mb-2">Remover</a>
                             </div>
                         {{/each}}
@@ -51,4 +57,5 @@
             </div>
         </div>
     </div>
+    
 </main>
